@@ -8,6 +8,7 @@ import {
   names,
 } from 'unique-names-generator';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ export class AppComponent {
   constructor() {
     this.items = Array.from({ length: 25 }).map((_, i) => {
       return {
-        id: i + '',
+        id: uuid() + '',
         title: uniqueNamesGenerator({
           dictionaries: [adjectives, colors, names],
           length: 2,
@@ -44,7 +45,30 @@ export class AppComponent {
     console.log('scrollEvent : ' + event);
   }
 
-  meuh(): void {
-    this.virtualScrollViewport.scrollToIndex(5);
+  scrollToIndex(index: number): void {
+    this.virtualScrollViewport.scrollToIndex(index);
   }
+
+  addItems(): void {
+    this.items = this.items.concat(
+      Array.from({ length: 5 }).map((_, i) => {
+        return {
+          id: uuid() + '',
+          title: uniqueNamesGenerator({
+            dictionaries: [adjectives, colors, names],
+            length: 2,
+            style: 'capital',
+            separator: ' ',
+          }),
+          text: new LoremIpsum({
+            wordsPerSentence: {
+              max: 40,
+              min: 4,
+            },
+          }).generateSentences(1),
+        };
+      })
+    );
+  }
+
 }

@@ -3,4 +3,5 @@
   class="example-viewport">
   <app-item *cdkVirtualFor="let item of items" [item]="item" [attr.data-hm-id]="item.id"></app-item>
 </cdk-virtual-scroll-viewport>
-<button (click)="meuh()">OK</button>
+<button (click)="scrollToIndex(5)">go to index 5</button>
+<button (click)="addItems()">add items</button>
